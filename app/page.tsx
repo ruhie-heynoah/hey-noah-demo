@@ -1,65 +1,299 @@
-import Image from "next/image";
+'use client'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState, useRef } from 'react'
+import Image from 'next/image'
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+const gradient = 'linear-gradient(135deg,#D82C9C,#EBA028)'
+const glass =
+  'bg-[rgba(255,255,255,0.06)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] rounded-2xl shadow-[0_6px_30px_rgba(0,0,0,0.6)]'
+
+export default function Page() {
+  const [visibleCards, setVisibleCards] = useState<number[]>([])
+  const [showAvailable, setShowAvailable] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    let timers: NodeJS.Timeout[] = []
+    const runSequence = () => {
+      setVisibleCards([])
+      setShowAvailable(false)
+
+      timers.push(setTimeout(() => setVisibleCards([0]), 400))
+      timers.push(setTimeout(() => setVisibleCards([0, 1]), 2200))
+      timers.push(setTimeout(() => setVisibleCards([0, 1, 2]), 4400))
+      timers.push(setTimeout(() => setShowAvailable(true), 5200))
+      timers.push(setTimeout(() => setVisibleCards([0, 1, 2, 3]), 7200))
+      timers.push(setTimeout(runSequence, 14000))
+    }
+
+    runSequence()
+    return () => timers.forEach(clearTimeout)
+  }, [])
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [visibleCards])
+
+  const cards = [
+// 1️⃣ Ryan’s Email
+{
+  id: 0,
+  content: (
+    <div>
+      <p className="text-sm text-gray-400">From: Ryan Brent</p>
+      <p className="text-sm text-gray-400">To: John Ivy (john@gmail.com)</p>
+
+      {/* Gradient Cc line */}
+      <p className="text-sm font-medium">
+        <span
+          className="font-medium"
+          style={{
+            background: 'linear-gradient(90deg, #D82C9C 0%, #EBA028 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Cc: noah@heynoah.io
+        </span>
+      </p>
+
+      <div className="mt-4 leading-relaxed text-[15px]">
+        <p>Hi John,</p>
+
+        {/* Gradient body line */}
+        <p
+          className="my-3 font-medium"
+          style={{
+            background: 'linear-gradient(90deg, #D82C9C 0%, #EBA028 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          I’ve Cc’d Noah who can help us find some time.
+        </p>
+
+        <p>
+          Thanks,
+          <br /> Ryan
+        </p>
+      </div>
+    </div>
+  ),
+},
+
+
+    // 2️⃣ Noah’s Thinking
+    {
+      id: 1,
+      content: (
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/gradient-logo.png"
+              alt="Noah Logo"
+              width={24}
+              height={24}
+              className="inline-block"
+            />
+            <p className="font-semibold text-lg">Noah’s Thinking…</p>
+          </div>
+          <p className="italic text-sm text-gray-300 mt-2 ml-8">
+            John’s meeting is high priority — I’ll move your low priority time blocks to free up
+            some slots.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      ),
+    },
+// 3️⃣ Calendar Shuffle — Ryan’s Calendar (Unified Radius)
+{
+  id: 2,
+  content: (
+    <motion.div layout className="flex flex-col">
+      <p className="font-semibold text-lg mb-2">Ryan’s Calendar</p>
+      <p className="text-xs text-gray-400 mb-4">Wednesday, Nov 14, 2025</p>
+
+      <motion.div
+        layout
+        transition={{ layout: { type: "spring", stiffness: 220, damping: 26 } }}
+        className="flex flex-col gap-3"
+      >
+        {/* Team Standup */}
+        <motion.div
+          layout
+          className={`${glass} p-3 text-sm font-medium rounded-[18px]`}
+        >
+          Team Standup • 9:00 AM
+        </motion.div>
+
+        {/* Deep Work – shifts downward when new slots appear */}
+        <motion.div
+          layout
+          transition={{ layout: { type: "spring", stiffness: 200, damping: 24 } }}
+          className={`${glass} p-3 text-sm font-medium rounded-[18px]`}
+        >
+          Deep Work • 10:00 AM
+        </motion.div>
+
+        {/* Noah inserts new available time slots */}
+        <AnimatePresence>
+          {showAvailable && (
+            <>
+              {/* Available 11:30 AM */}
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className="p-[2px] rounded-[18px] bg-gradient-to-r from-[#D82C9C] to-[#EBA028]"
+              >
+                <motion.div
+                  layout
+                  animate={{
+                    boxShadow: [
+                      "0 0 20px rgba(235,160,40,0.20)",
+                      "0 0 28px rgba(235,160,40,0.28)",
+                      "0 0 20px rgba(235,160,40,0.20)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="rounded-[18px] p-3 text-sm font-medium text-white backdrop-blur-xl
+                             bg-[rgba(255,255,255,0.08)]"
+                >
+                  Available • 11:30 AM
+                </motion.div>
+              </motion.div>
+
+              {/* Available 1:00 PM */}
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.15, duration: 0.7, ease: "easeOut" }}
+                className="p-[2px] rounded-[18px] bg-gradient-to-r from-[#D82C9C] to-[#EBA028]"
+              >
+                <motion.div
+                  layout
+                  animate={{
+                    boxShadow: [
+                      "0 0 20px rgba(235,160,40,0.20)",
+                      "0 0 28px rgba(235,160,40,0.28)",
+                      "0 0 20px rgba(235,160,40,0.20)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="rounded-[18px] p-3 text-sm font-medium text-white backdrop-blur-xl
+                             bg-[rgba(255,255,255,0.08)]"
+                >
+                  Available • 1:00 PM
+                </motion.div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* Client Call */}
+        <motion.div
+          layout
+          className={`${glass} p-3 text-sm font-medium rounded-[18px]`}
+        >
+          Client Call • 2:00 PM
+        </motion.div>
+
+        {/* Design Review */}
+        <motion.div
+          layout
+          className={`${glass} p-3 text-sm font-medium rounded-[18px]`}
+        >
+          Design Review • 4:00 PM
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  ),
+},
+
+    // 4️⃣ Noah’s Follow-up
+    {
+      id: 3,
+      content: (
+        <div>
+          <p className="text-sm text-gray-400">
+            From:{' '}
+            <span
+              style={{
+                background: gradient,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              noah@heynoah.io
+            </span>
+          </p>
+          <p className="text-sm text-gray-400">To: Ryan Brent, John Ivy</p>
+
+          <div className="mt-4 leading-relaxed text-[15px]">
+            <p>Hi Ryan and John,</p>
+            <p className="mt-2">
+              Here are a few options that work for both of you:
+              <br />• Wednesday, Nov 14 • 11:30 AM
+              <br />• Wednesday, Nov 14 • 1:00 PM
+              <br />• Friday, Nov 16 • 11:30 AM
+            </p>
+            <p className="mt-4">
+              Feel free to adjust — I’ll handle the rest.
+              <br />
+              <span
+                className="font-semibold"
+                style={{
+                  background: gradient,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Noah (Ryan’s Executive Assistant)
+              </span>
+            </p>
+          </div>
         </div>
-      </main>
-    </div>
-  );
+      ),
+    },
+  ]
+
+  return (
+    <main
+      className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b
+                 from-[#0B0B0C] to-[#151515] text-[#EAEAEA] overflow-hidden px-4 sm:px-6 py-5 sm:py-8"
+    >
+      <div
+        className="w-full max-w-md sm:max-w-lg lg:max-w-xl flex flex-col gap-4
+                   transition-all duration-700"
+      >
+        <AnimatePresence>
+          {visibleCards.map((id) => (
+            <motion.div
+              key={id}
+              ref={id === visibleCards.length - 1 ? scrollRef : null}
+              initial={{ opacity: 0, y: 70 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.8, 0.25, 1] }}
+              layout
+              className={`${glass} p-5`}
+            >
+              {cards[id].content}
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </main>
+  )
+  
 }
