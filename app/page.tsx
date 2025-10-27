@@ -266,6 +266,71 @@ export default function Page() {
         </div>
       ),
     },
+
+    {
+      id: 4,
+      content: (
+        <div>
+          <p className="text-sm text-gray-400">From: John Ivy</p>
+          <p className="text-sm text-gray-400">To: Ryan Brent, Noah</p>
+    
+          <div className="mt-4 leading-relaxed text-[15px]">
+            <p>Hi both,</p>
+            <p className="my-3 font-medium">
+              Wednesday • 1:00 PM works for me — thanks Noah for arranging.
+            </p>
+            <p>
+              Best,
+              <br /> John
+            </p>
+          </div>
+        </div>
+      ),
+    },
+
+    {
+      id: 5,
+      content: (
+        <div>
+          <p className="text-sm text-gray-400">
+            From:{' '}
+            <span
+              className="font-medium"
+              style={{
+                background: 'linear-gradient(90deg, #D82C9C 0%, #EBA028 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              noah@heynoah.io
+            </span>
+          </p>
+          <p className="text-sm text-gray-400">To: Ryan Brent, John Ivy</p>
+    
+          <div className="mt-4 leading-relaxed text-[15px]">
+            <p>Hi Ryan and John,</p>
+            <p className="mt-2 font-medium">
+              Perfect — meeting confirmed for Wednesday • 1:00 PM.
+              <br />
+              I’ve sent calendar invites to both of you.
+            </p>
+            <p className="mt-4">
+              <span
+                className="font-semibold"
+                style={{
+                  background: 'linear-gradient(90deg, #D82C9C 0%, #EBA028 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Noah (Ryan’s Executive Assistant)
+              </span>
+            </p>
+          </div>
+        </div>
+      ),
+    },
+    
   ]
 
   return (
