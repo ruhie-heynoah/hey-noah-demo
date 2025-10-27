@@ -17,13 +17,14 @@ export default function Page() {
     const runSequence = () => {
       setVisibleCards([])
       setShowAvailable(false)
-
-      timers.push(setTimeout(() => setVisibleCards([0]), 400))
-      timers.push(setTimeout(() => setVisibleCards([0, 1]), 2200))
-      timers.push(setTimeout(() => setVisibleCards([0, 1, 2]), 4400))
+      timers.push(setTimeout(() => setVisibleCards([0]), 400))         // Ryan’s email
+      timers.push(setTimeout(() => setVisibleCards([0, 1]), 2200))     // Noah thinking
+      timers.push(setTimeout(() => setVisibleCards([0, 1, 2]), 4400))  // Calendar
       timers.push(setTimeout(() => setShowAvailable(true), 5200))
-      timers.push(setTimeout(() => setVisibleCards([0, 1, 2, 3]), 7200))
-      timers.push(setTimeout(runSequence, 14000))
+      timers.push(setTimeout(() => setVisibleCards([0, 1, 2, 3]), 7200))  // Noah’s follow-up
+      timers.push(setTimeout(() => setVisibleCards([0, 1, 2, 3, 4]), 9500)) // John’s reply
+      timers.push(setTimeout(() => setVisibleCards([0, 1, 2, 3, 4, 5]), 11500)) // Noah’s confirmation
+      timers.push(setTimeout(runSequence, 18500)) // loop delay
     }
 
     runSequence()
