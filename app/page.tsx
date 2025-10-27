@@ -252,7 +252,7 @@ export default function Page() {
           <p className="text-sm text-gray-400">To: Ryan Brent, John Ivy</p>
 
           <div className="mt-4 leading-relaxed text-[15px]">
-            <p>Hi Ryan and John,</p>
+            <p>Hi John,</p>
             <p className="mt-2">
               Here are a few options that work for both of you:
               <br />• Wednesday, Nov 14 • 11:30 AM
@@ -319,7 +319,7 @@ export default function Page() {
           <p className="text-sm text-gray-400">To: Ryan Brent, John Ivy</p>
 
           <div className="mt-4 leading-relaxed text-[15px]">
-            <p>Hi Ryan and John,</p>
+            <p>Hi John,</p>
             <p className="mt-2 font-medium">
               Perfect — meeting confirmed for Wednesday • 1:00 PM.
               <br />
